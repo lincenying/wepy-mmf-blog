@@ -1,6 +1,12 @@
 import { combineReducers } from 'redux'
-import counter from './counter'
+import topics from './topics'
+import topicsByVisit from './topics-by-visit'
+import article from './article'
+import comment from './comment'
 
 export default combineReducers({
-    counter
+    topics,
+    topicsByVisit,
+    article,
+    comment,
 })

@@ -1,0 +1,55 @@
+<style lang="less">
+@import url(../assets/less/nav.less);
+</style>
+
+<template>
+<view class="global-nav">
+    <view class="wrap">
+        <navigator url="/pages/topics" class="logo-link">
+            <view class="icon icon-nav-logo"></view>
+            <text class="hidden">M.M.F 小屋</text>
+        </navigator>
+        <view class="main-nav">
+            <navigator url="/pages/topics" class="nav-link {{ isTopics ? 'current' : '' }}">
+                <view class="icon icon-nav-home"></view>
+            </navigator>
+            <navigator url="/pages/topics-by-visit" class="nav-link {{ isTopicsByVisit ? 'current' : '' }}">
+                <view class="icon icon-nav-explore"></view>
+            </navigator>
+            <navigator url="/pages/about" class="nav-link {{ isAbout ? 'current' : '' }}">
+                <view class="icon icon-nav-features"></view>
+            </navigator>
+        </view>
+    </view>
+</view>
+</template>
+
+<script>
+import wepy from 'wepy'
+
+export default class Navigation extends wepy.component {
+    props = {
+    }
+    data = {}
+    events = {
+    }
+    watch = {
+    }
+    methods = {
+    }
+    computed = {
+        isTopics() {
+            return this.$wxpage.route === 'pages/topics'
+        },
+        isTopicsByVisit() {
+            return this.$wxpage.route === 'pages/topics-by-visit'
+        },
+        isAbout() {
+            return this.$wxpage.route === 'pages/about'
+        }
+    }
+    onLoad() {
+        console.log(this)
+    }
+}
+</script>

@@ -1,0 +1,88 @@
+<template>
+<view class="card">
+    <view class="comments">
+        <view class="comment-post-wrap">
+            <image src="https://ww2.sinaimg.cn/large/005uQRNCgw1f4ij3d8m05j301s01smwx.jpg" alt="" class="avatar-img"></image>
+            <view class="comment-post-input-wrap base-textarea-wrap"><textarea id="content" cols="30" rows="4" class="textarea-input base-input"></textarea></view>
+            <view class="comment-post-actions clearfix"><text href="javascript:;" class="btn btn-blue">发表评论</text></view>
+        </view>
+        <view class="comment-items-wrap">
+            <block wx:for-items="{{lists}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+                <view class="comment-item">
+                    <view href="javascript:;" class="comment-author-avatar-link"><image src="https:////ww2.sinaimg.cn/large/005uQRNCgw1f4ij3d8m05j301s01smwx.jpg" alt="" class="avatar-img"></image></view>
+                    <view class="comment-content-wrap">
+                        <view class="comment-author-wrap"><text class="comment-author">{{ item.username }}</text></view>
+                        <text class="comment-content">{{ item.content }}</text>
+                        <view class="comment-footer">
+                            <text class="comment-time">{{ item.creat_date }}</text>
+                            <text class="comment-action-item comment-reply">回复</text>
+                        </view>
+                    </view>
+                </view>
+            </block>
+        </view>
+    </view>
+</view>
+</template>
+
+<script>
+/* eslint-disable no-inline-comments */
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+import testMixin from '../mixins/test'
+import { getComments } from '../store/actions'
+
+@connect({
+    page(state) {
+        return state.comment.page
+    },
+    hasNext(state) {
+        return state.comment.hasNext
+    },
+    lists(state) {
+        return state.comment.lists
+    },
+    total(state) {
+        return state.comment.total
+    }
+}, {
+    getComments
+})
+
+export default class Comments extends wepy.component {
+    props = {
+        thisid: {
+            type: [String],
+            default: ''
+        }
+    }
+    components = {
+    }
+    mixins = [testMixin]
+    data = {
+
+    }
+    computed = {
+
+    }
+    methods = {
+        handleLoadMore(page = undefined) {
+            console.log(this.thisid)
+            this.methods.getComments({
+                id: this.thisid,
+                page: page || this.page
+            })
+        }
+    }
+    events = {
+
+    }
+    async onLoad() {
+
+    }
+}
+</script>
+
+<style lang="less">
+@import url(../assets/less/comments.less);
+</style>

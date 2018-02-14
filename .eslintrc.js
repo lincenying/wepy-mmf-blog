@@ -22,6 +22,7 @@ module.exports = {
         "accessor-pairs": 2,
         "arrow-spacing": 2,
         "block-scoped-var": 2,
+        "comma-dangle": 0,
         "computed-property-spacing": 2,
         "default-case": 2,
         "dot-location": [2, "property"],
@@ -83,6 +84,7 @@ module.exports = {
         "no-useless-call": 2,
         "no-useless-concat": 2,
         "no-void": 2,
+        "object-curly-spacing": ["error", "always"],
         "object-shorthand": 2,
         "operator-assignment": 2,
         "operator-linebreak": 0,
@@ -91,6 +93,7 @@ module.exports = {
         "radix": 2,
         "semi": ["error", "never"],
         "sort-vars": 2,
+        "space-before-function-paren": 0,
         "valid-jsdoc": 2,
         "wrap-regex": 2,
 

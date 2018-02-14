@@ -1,0 +1,67 @@
+<template>
+<view class="frontend">
+    <view class="main wrap app-view">
+        <view class="home-feeds cards-wrap">
+            <Feed :lists.sync="lists"></Feed>
+            <view wx:if="{{hasNext}}" class="load-more-wrap"><view @tap="handleLoadMore" class="load-more">更多<view class="icon icon-circle-loading"></view></view></view>
+            <view wx:else class="load-more-no-next">我是有底线的好吗...</view>
+        </view>
+    </view>
+</view>
+</template>
+
+<script>
+/* eslint-disable no-inline-comments */
+import wepy from 'wepy'
+import { connect } from 'wepy-redux'
+import testMixin from '../mixins/test'
+import { getTopics } from '../store/actions'
+import Feed from '@/components/feed'
+
+@connect({
+    page(state) {
+        return state.topics.page
+    },
+    hasNext(state) {
+        return state.topics.hasNext
+    },
+    lists(state) {
+        return state.topics.lists
+    },
+    total(state) {
+        return state.topics.total
+    }
+}, {
+    getTopics
+})
+
+export default class Topics extends wepy.page {
+    config = {
+        navigationBarTitleText: 'M.M.F 小屋'
+    }
+    components = {
+        Feed
+    }
+    mixins = [testMixin]
+    data = {
+
+    }
+    computed = {
+
+    }
+    methods = {
+        handleLoadMore() {
+            this.methods.getTopics({ page: this.page })
+        }
+    }
+    events = {
+
+    }
+    onLoad() {
+        this.methods.getTopics({ page: 1 })
+    }
+}
+</script>
+<style lang="less">
+@import url(../assets/less/load-more.less);
+</style>
