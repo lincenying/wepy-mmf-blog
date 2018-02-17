@@ -14,7 +14,7 @@
                 <view class="feed-article-content markdown-body">{{ item.content }}</view>
             </view>
         </view>
-        <feedActions :item.sync="item"></feedActions>
+        <feedActions :item="item"></feedActions>
     </view>
 </repeat>
 </template>

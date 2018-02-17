@@ -53,7 +53,7 @@
 <script>
 /* eslint-disable no-inline-comments */
 import wepy from 'wepy'
-import testMixin from '../mixins/test'
+import globalMixin from '../mixins/global'
 
 export default class About extends wepy.page {
     config = {
@@ -61,7 +61,7 @@ export default class About extends wepy.page {
     }
     components = {
     }
-    mixins = [testMixin]
+    mixins = [globalMixin]
     onLoad() {
     }
 }

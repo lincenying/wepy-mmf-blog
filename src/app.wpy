@@ -22,7 +22,7 @@ export default class extends wepy.app {
         ],
         tabBar: {
             color: '#7c7c7c',
-            selectedColor: '#F8426D',
+            selectedColor: '#3aced5',
             backgroundColor: '#fff',
             borderStyle: 'black',
             list: [
@@ -54,7 +54,8 @@ export default class extends wepy.app {
         }
     };
     globalData = {
-        userInfo: null
+        userInfo: null,
+        test: 1,
     }
     constructor () {
         super()
@@ -62,18 +63,7 @@ export default class extends wepy.app {
         this.use('promisify')
     }
     onLaunch () {
-        this.testAsync()
-    }
-    sleep (s) {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve('promise resolved')
-            }, s * 1000)
-        })
-    }
-    async testAsync () {
-        const data = await this.sleep(3)
-        console.log(data)
+        this.getUserInfo()
     }
     getUserInfo (cb) {
         const that = this
@@ -82,8 +72,12 @@ export default class extends wepy.app {
         }
         wepy.getUserInfo({
             success (res) {
+                console.log(res)
                 that.globalData.userInfo = res.userInfo
                 cb && cb(res.userInfo)
+            },
+            error(error) {
+                console.log(error)
             }
         })
     }

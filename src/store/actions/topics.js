@@ -1,8 +1,10 @@
 import wepy from 'wepy'
 import { createAction } from 'redux-actions'
+import api from '@/api'
+import config from '@/config'
 
 export const getTopics = createAction('getTopics', async ({ page }) => {
-    const { data: { code, data } } = await wepy.request(`https://www.mmxiaowu.com/api/frontend/article/list?page=${page}&limit=10`)
+    const { code, data } = await api.get(`frontend/article/list?page=${page}&limit=10`)
     if (code === 200) {
         return {
             ...data,
@@ -10,3 +12,5 @@ export const getTopics = createAction('getTopics', async ({ page }) => {
         }
     }
 })
+
+export const modifyLikeStatus = createAction('modifyLikeStatus', payload => payload)

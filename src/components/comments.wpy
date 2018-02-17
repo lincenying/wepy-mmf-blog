@@ -2,20 +2,22 @@
 <view class="card">
     <view class="comments">
         <view class="comment-post-wrap">
-            <image src="https://ww2.sinaimg.cn/large/005uQRNCgw1f4ij3d8m05j301s01smwx.jpg" alt="" class="avatar-img"></image>
-            <view class="comment-post-input-wrap base-textarea-wrap"><textarea id="content" cols="30" rows="4" class="textarea-input base-input"></textarea></view>
-            <view class="comment-post-actions clearfix"><text href="javascript:;" class="btn btn-blue">发表评论</text></view>
+            <form bindsubmit="bindFormSubmit" bindReset="bindFormReset">
+                <image src="{{ userInfo.avatar }}" alt="" class="avatar-img"></image>
+                <view class="comment-post-input-wrap base-textarea-wrap"><textarea value="{{ content }}" focus="{{ focus }}" id="content" name="content" cols="30" rows="4" class="textarea-input base-input"></textarea></view>
+                <view class="comment-post-actions clearfix"><button form-type="submit" class="btn btn-blue">发表评论</button></view>
+            </form>
         </view>
         <view class="comment-items-wrap">
-            <block wx:for-items="{{lists}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+            <block wx:for-items="{{ lists }}" wx:for-index="index" wx:for-item="item" wx:key="id">
                 <view class="comment-item">
-                    <view href="javascript:;" class="comment-author-avatar-link"><image src="https:////ww2.sinaimg.cn/large/005uQRNCgw1f4ij3d8m05j301s01smwx.jpg" alt="" class="avatar-img"></image></view>
+                    <view href="javascript:;" class="comment-author-avatar-link"><image src="{{ item.avatar || avatar }}" alt="" class="avatar-img"></image></view>
                     <view class="comment-content-wrap">
                         <view class="comment-author-wrap"><text class="comment-author">{{ item.username }}</text></view>
                         <text class="comment-content">{{ item.content }}</text>
                         <view class="comment-footer">
                             <text class="comment-time">{{ item.creat_date }}</text>
-                            <text class="comment-action-item comment-reply">回复</text>
+                            <text @tap="handleReply({{ item.username }})" data-username="{{ item.username }}" class="comment-action-item comment-reply">回复</text>
                         </view>
                     </view>
                 </view>
@@ -29,8 +31,10 @@
 /* eslint-disable no-inline-comments */
 import wepy from 'wepy'
 import { connect } from 'wepy-redux'
-import testMixin from '../mixins/test'
-import { getComments } from '../store/actions'
+import globalMixin from '@/mixins/global'
+import { getComments, insertComments } from '@/store/actions'
+import api from '@/api'
+import config from '@/config'
 
 @connect({
     page(state) {
@@ -44,9 +48,12 @@ import { getComments } from '../store/actions'
     },
     total(state) {
         return state.comment.total
+    },
+    userInfo(state) {
+        return state.global
     }
 }, {
-    getComments
+    getComments, insertComments
 })
 
 export default class Comments extends wepy.component {
@@ -58,21 +65,58 @@ export default class Comments extends wepy.component {
     }
     components = {
     }
-    mixins = [testMixin]
+    mixins = [globalMixin]
     data = {
-
+        avatar: config.avatar,
+        content: '',
+        focus: false
     }
     computed = {
 
     }
     methods = {
         handleLoadMore(page = undefined) {
-            console.log(this.thisid)
             this.methods.getComments({
                 id: this.thisid,
                 page: page || this.page
             })
-        }
+        },
+        async bindFormReset(e) {
+            this.content = ''
+            this.$apply()
+        },
+        handleReply(name) {
+            this.content = '回复 @' + name + ': '
+            this.focus = true
+            this.$apply()
+        },
+        async bindFormSubmit(e) {
+            const { content } = e.detail.value
+            const id = this.thisid
+            if (!this.userInfo.user) {
+                wepy.showToast({
+                    icon: 'none',
+                    title: '请先授权登录...',
+                })
+            } else if (content === '') {
+                wepy.showToast({
+                    icon: 'none',
+                    title: '请输入评论内容...',
+                })
+            } else {
+                const { code, data } = await api.post('frontend/comment/insert', {
+                    id, content, avatar: this.userInfo.avatar
+                })
+                if (code === 200) {
+                    wepy.showToast({
+                        title: '发布评论成功...',
+                    })
+                    await this.methods.insertComments(data)
+                    this.content = ''
+                    this.$apply()
+                }
+            }
+        },
     }
     events = {
 

@@ -14,8 +14,9 @@
 /* eslint-disable no-inline-comments */
 import wepy from 'wepy'
 import { connect } from 'wepy-redux'
-import testMixin from '../mixins/test'
-import { getTopics } from '../store/actions'
+import globalMixin from '../mixins/global'
+import api from '../api'
+import { getTopics, setGlobal } from '../store/actions'
 import Feed from '@/components/feed'
 
 @connect({
@@ -32,7 +33,7 @@ import Feed from '@/components/feed'
         return state.topics.total
     }
 }, {
-    getTopics
+    getTopics, setGlobal
 })
 
 export default class Topics extends wepy.page {
@@ -42,7 +43,7 @@ export default class Topics extends wepy.page {
     components = {
         Feed
     }
-    mixins = [testMixin]
+    mixins = [globalMixin]
     data = {
 
     }
@@ -57,8 +58,24 @@ export default class Topics extends wepy.page {
     events = {
 
     }
-    onLoad() {
-        this.methods.getTopics({ page: 1 })
+    async onLoad() {
+        let userinfo
+        wepy.showLoading({
+            mask: true,
+            title: '数据加载中...',
+        })
+        try {
+            userinfo = await api.login()
+            this.methods.setGlobal(userinfo)
+        } catch (e) {
+            console.log(e)
+            wepy.showModal({
+                title: '提示',
+                content: `用户登录失败。${e.message}`
+            })
+        }
+        await this.methods.getTopics({ page: 1 })
+        wepy.hideLoading()
     }
 }
 </script>

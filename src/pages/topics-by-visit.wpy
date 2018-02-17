@@ -16,7 +16,7 @@
 /* eslint-disable no-inline-comments */
 import wepy from 'wepy'
 import { connect } from 'wepy-redux'
-import testMixin from '../mixins/test'
+import globalMixin from '../mixins/global'
 import { getTopicsByVisit } from '../store/actions'
 import Feed from '@/components/feed'
 
@@ -44,7 +44,7 @@ export default class TopicsByVisit extends wepy.page {
     components = {
         Feed
     }
-    mixins = [testMixin]
+    mixins = [globalMixin]
     data = {
 
     }
@@ -59,8 +59,13 @@ export default class TopicsByVisit extends wepy.page {
     events = {
 
     }
-    onLoad() {
-        this.methods.getTopicsByVisit({ page: 1 })
+    async onLoad() {
+        wepy.showLoading({
+            mask: true,
+            title: '数据加载中...',
+        })
+        await this.methods.getTopicsByVisit({ page: 1 })
+        wepy.hideLoading()
     }
 }
 </script>

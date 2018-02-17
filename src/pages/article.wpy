@@ -23,7 +23,7 @@
 /* eslint-disable no-inline-comments */
 import wepy from 'wepy'
 import { connect } from 'wepy-redux'
-import testMixin from '../mixins/test'
+import globalMixin from '../mixins/global'
 import { getArticle } from '../store/actions'
 import htmlParser from '@/components/htmlParser'
 import feedActions from '@/components/feed-actions'
@@ -46,7 +46,7 @@ export default class Topics extends wepy.page {
         feedActions,
         Comments,
     }
-    mixins = [testMixin]
+    mixins = [globalMixin]
     data = {
         names: 'myHtmlParserKiner',
         content: '',
@@ -58,6 +58,10 @@ export default class Topics extends wepy.page {
     methods = {
     }
     async onLoad(options) {
+        wepy.showLoading({
+            mask: true,
+            title: '数据加载中...',
+        })
         const id = options.id
         await this.methods.getArticle({
             id
@@ -67,6 +71,7 @@ export default class Topics extends wepy.page {
         this.$apply()
         this.$invoke('htmlParser', 'htmlParserNotice')
         this.$invoke('Comments', 'handleLoadMore', '1')
+        wepy.hideLoading()
     }
 }
 </script>
