@@ -67,6 +67,13 @@ export default class TopicsByVisit extends wepy.page {
         await this.methods.getTopicsByVisit({ page: 1 })
         wepy.hideLoading()
     }
+    onShareAppMessage () {
+        return {
+            title: 'MMF小屋',
+            desc: 'MMF小屋!',
+            path: '/page/topics-by-visit'
+        }
+    }
 }
 </script>
 <style lang="less">

@@ -73,6 +73,13 @@ export default class Topics extends wepy.page {
         this.$invoke('Comments', 'handleLoadMore', '1')
         wepy.hideLoading()
     }
+    onShareAppMessage () {
+        return {
+            title: this.item.title,
+            desc: this.item.title,
+            path: '/page/article?id=' + this.item._id
+        }
+    }
 }
 </script>
 
