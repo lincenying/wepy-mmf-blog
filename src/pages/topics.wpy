@@ -1,10 +1,13 @@
 <template>
 <view class="frontend">
     <view class="main wrap app-view">
-        <view class="home-feeds cards-wrap">
+        <view wx:if="{{isLoad}}" class="home-feeds cards-wrap">
             <Feed :lists.sync="lists"></Feed>
             <view wx:if="{{hasNext}}" class="load-more-wrap"><view @tap="handleLoadMore" class="load-more">更多<view class="icon icon-circle-loading"></view></view></view>
             <view wx:else class="load-more-no-next">我是有底线的好吗...</view>
+        </view>
+        <view wx:else class="home-feeds cards-wrap">
+            <Loading></Loading>
         </view>
     </view>
 </view>
@@ -18,6 +21,7 @@ import globalMixin from '../mixins/global'
 import api from '../api'
 import { getTopics, setGlobal } from '../store/actions'
 import Feed from '@/components/feed'
+import Loading from '@/components/loading'
 
 @connect({
     page(state) {
@@ -31,6 +35,9 @@ import Feed from '@/components/feed'
     },
     total(state) {
         return state.topics.total
+    },
+    isLoad(state) {
+        return state.topics.isLoad
     }
 }, {
     getTopics, setGlobal
@@ -41,7 +48,8 @@ export default class Topics extends wepy.page {
         navigationBarTitleText: 'M.M.F 小屋'
     }
     components = {
-        Feed
+        Feed,
+        Loading
     }
     mixins = [globalMixin]
     data = {

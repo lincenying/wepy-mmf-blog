@@ -1,6 +1,6 @@
 <template>
 <view class="frontend">
-    <view class="main wrap app-view">
+    <view wx:if="{{isLoad}}" class="main wrap app-view">
         <view class="card card-question-head">
             <view class="question-content">
                 <view class="question-title">
@@ -14,7 +14,12 @@
             </view>
             <feedActions :item.sync="item"></feedActions>
         </view>
-        <Comments :thisid.sync="thisid"></Comments>
+        <!-- <Comments :thisid.sync="thisid"></Comments> -->
+    </view>
+    <view wx:else class="main wrap app-view">
+        <view class="home-feeds cards-wrap">
+            <Loading></Loading>
+        </view>
     </view>
 </view>
 </template>
@@ -27,12 +32,16 @@ import globalMixin from '../mixins/global'
 import { getArticle } from '../store/actions'
 import htmlParser from '@/components/htmlParser'
 import feedActions from '@/components/feed-actions'
-import Comments from '@/components/comments'
+// import Comments from '@/components/comments'
+import Loading from '@/components/loading'
 
 @connect({
     item(state) {
         return state.article.item
     },
+    isLoad(state) {
+        return state.article.isLoad
+    }
 }, {
     getArticle
 })
@@ -44,7 +53,8 @@ export default class Topics extends wepy.page {
     components = {
         htmlParser,
         feedActions,
-        Comments,
+        // Comments,
+        Loading,
     }
     mixins = [globalMixin]
     data = {
@@ -70,7 +80,7 @@ export default class Topics extends wepy.page {
         this.thisid = this.item._id
         this.$apply()
         this.$invoke('htmlParser', 'htmlParserNotice')
-        this.$invoke('Comments', 'handleLoadMore', '1')
+        // this.$invoke('Comments', 'handleLoadMore', '1')
         wepy.hideLoading()
     }
     onShareAppMessage () {

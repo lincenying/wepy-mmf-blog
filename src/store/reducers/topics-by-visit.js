@@ -10,11 +10,13 @@ export default handleActions({
             hasNext,
             total,
             lists,
+            isLoad: true
         }
     }
 }, {
     page: 1,
     hasNext: false,
     total: 0,
-    lists: []
+    lists: [],
+    isLoad: false
 })

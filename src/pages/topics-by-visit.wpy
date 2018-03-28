@@ -1,12 +1,15 @@
 <template>
 <view class="frontend">
     <view class="main wrap app-view">
-        <view class="home-feeds cards-wrap">
+        <view wx:if="{{isLoad}}" class="home-feeds cards-wrap">
             <Feed :lists.sync="lists"></Feed>
             <view wx:if="{{hasNext}}" class="load-more-wrap">
                 <view @tap="handleLoadMore" class="load-more">更多<view class="icon icon-circle-loading"></view></view>
             </view>
             <view wx:else class="load-more-no-next">我是有底线的好吗...</view>
+        </view>
+        <view wx:else class="home-feeds cards-wrap">
+            <Loading></Loading>
         </view>
     </view>
 </view>
@@ -32,6 +35,9 @@ import Feed from '@/components/feed'
     },
     total(state) {
         return state.topicsByVisit.total
+    },
+    isLoad(state) {
+        return state.topicsByVisit.isLoad
     }
 }, {
     getTopicsByVisit

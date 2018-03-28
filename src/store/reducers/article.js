@@ -5,6 +5,7 @@ export default handleActions({
         return {
             ...state,
             item: action.payload.item,
+            isLoad: true
         }
     },
     modifyLikeStatusByItem(state, action) {
@@ -22,5 +23,6 @@ export default handleActions({
         return state
     },
 }, {
-    item: {}
+    item: {},
+    isLoad: false
 })

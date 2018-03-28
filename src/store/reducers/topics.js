@@ -10,6 +10,7 @@ export default handleActions({
             hasNext,
             total,
             lists,
+            isLoad: true
         }
     },
     modifyLikeStatus(state, action) {
@@ -28,5 +29,6 @@ export default handleActions({
     page: 1,
     hasNext: false,
     total: 0,
-    lists: []
+    lists: [],
+    isLoad: false
 })
