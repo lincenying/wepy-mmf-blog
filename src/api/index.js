@@ -74,7 +74,7 @@ export default {
         userinfo.code = loginData.code
         return {
             ...userinfo,
-            ...openData
+            ...openData.data
         }
     },
     async login () {
@@ -104,11 +104,8 @@ export default {
         return $return
     },
     async jscode2session(code) {
-        const xhr = await this.get('https://api.weixin.qq.com/sns/jscode2session', {
-            appid: config.apiId,
-            secret: config.secret,
-            js_code: code,
-            grant_type: 'authorization_code'
+        const xhr = await this.post('frontend/user/jscode2session', {
+            js_code: code
         })
         return xhr
     }
