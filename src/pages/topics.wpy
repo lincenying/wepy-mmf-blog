@@ -76,7 +76,6 @@ export default class Topics extends wepy.page {
             userinfo = await api.login()
             this.methods.setGlobal(userinfo)
         } catch (e) {
-            console.log(e)
             wepy.showModal({
                 title: '提示',
                 content: `用户登录失败。${e.message}`

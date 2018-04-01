@@ -13,12 +13,12 @@ export default {
         }
     },
     async get(url, params) {
-        url = url.indexOf('http://') > -1 || url.indexOf('https://') > -1 ? url : config.api + url
+        const url2 = url.indexOf('http://') > -1 || url.indexOf('https://') > -1 ? url : config.api + url
         const header = await this.getCustomHeader()
         let $return
         try {
             const xhr = await wepy.request({
-                url,
+                url: url2,
                 method: 'get',
                 data: params,
                 dataType: 'json',
@@ -33,18 +33,18 @@ export default {
         } catch (e) {
             wepy.showModal({
                 title: '提示',
-                content: `接口请求失败。${e.message}`
+                content: `接口请求失败。${e.message || url}`
             })
         }
         return $return
     },
     async post(url, data) {
-        url = url.indexOf('http://') > -1 || url.indexOf('https://') > -1 ? url : config.api + url
+        const url2 = url.indexOf('http://') > -1 || url.indexOf('https://') > -1 ? url : config.api + url
         const header = await this.getCustomHeader()
         let $return
         try {
             const xhr = await wepy.request({
-                url,
+                url: url2,
                 method: 'post',
                 data,
                 dataType: 'json',
@@ -62,7 +62,7 @@ export default {
         } catch (e) {
             wepy.showModal({
                 title: '提示',
-                content: `接口请求失败。${e.message}`
+                content: `接口请求失败。${e.message || url}`
             })
         }
         return $return

@@ -1,12 +1,7 @@
-<style lang="less">
-@import url(../assets/less/feed.less);
-@import url(../assets/less/actions.less);
-</style>
-
 <template>
 <repeat for="{{lists}}" key="index" index="index" item="item">
-    <view @tap="navToArticle({{item}})" class="card feed">
-        <view class="feed-content">
+    <view class="card feed">
+        <view @tap="navToArticle({{item}})" class="feed-content">
             <text class="feed-time">{{ item.update_date }}</text>
             <view class="feed-source">来自分类 <text class="feed-minor-link">{{ item.category_name }}</text></view>
             <view class="feed-main-link-wrap"><text class="feed-main-link">{{ item.title }}</text></view>
@@ -47,3 +42,7 @@ export default class Feed extends wepy.component {
     }
 }
 </script>
+<style lang="less">
+@import url(../assets/less/feed.less);
+@import url(../assets/less/actions.less);
+</style>
