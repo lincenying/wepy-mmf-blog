@@ -64,6 +64,13 @@ export default class About extends wepy.page {
     mixins = [globalMixin]
     onLoad() {
     }
+    onShareAppMessage () {
+        return {
+            title: 'MMF小屋',
+            desc: 'MMF小屋!',
+            path: '/pages/about'
+        }
+    }
 }
 </script>
 

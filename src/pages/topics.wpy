@@ -88,7 +88,7 @@ export default class Topics extends wepy.page {
         return {
             title: 'MMF小屋',
             desc: 'MMF小屋!',
-            path: '/page/topics'
+            path: '/pages/topics'
         }
     }
 }

@@ -87,7 +87,7 @@ export default class Topics extends wepy.page {
         return {
             title: this.item.title,
             desc: this.item.title,
-            path: '/page/article?id=' + this.item._id
+            path: '/pages/article?id=' + this.item._id
         }
     }
 }

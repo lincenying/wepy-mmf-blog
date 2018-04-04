@@ -77,7 +77,7 @@ export default class TopicsByVisit extends wepy.page {
         return {
             title: 'MMF小屋',
             desc: 'MMF小屋!',
-            path: '/page/topics-by-visit'
+            path: '/pages/topics-by-visit'
         }
     }
 }
