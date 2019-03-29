@@ -29,10 +29,8 @@ export default class Feed extends wepy.component {
         feedActions
     }
     data = {}
-    events = {
-    }
-    watch = {
-    }
+    events = {}
+    watch = {}
     methods = {
         navToArticle(item) {
             wx.navigateTo({

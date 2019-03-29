@@ -14,16 +14,11 @@
 import wepy from 'wepy'
 
 export default class Feed extends wepy.component {
-    props = {
-    }
-    components = {
-    }
+    props = {}
+    components = {}
     data = {}
-    events = {
-    }
-    watch = {
-    }
-    methods = {
-    }
+    events = {}
+    watch = {}
+    methods = {}
 }
 </script>

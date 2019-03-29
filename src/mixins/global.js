@@ -4,11 +4,7 @@ export default class globalMixin extends wepy.mixin {
     data = {
         globalData: wepy.$instance.globalData
     }
-    methods = {
-
-    }
-    onShow () {
-    }
-    onLoad () {
-    }
+    methods = {}
+    onShow() {}
+    onLoad() {}
 }

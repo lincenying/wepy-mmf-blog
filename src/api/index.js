@@ -27,7 +27,7 @@ export default {
             $return = xhr.data
             if ($return.code && $return.code !== 200) {
                 wepy.showToast({
-                    title: $return.message,
+                    title: $return.message
                 })
             }
         } catch (e) {
@@ -50,13 +50,13 @@ export default {
                 dataType: 'json',
                 header: {
                     ...header,
-                    'content-type': 'application/x-www-form-urlencoded',
+                    'content-type': 'application/x-www-form-urlencoded'
                 }
             })
             $return = xhr.data
             if ($return.code && $return.code !== 200) {
                 wepy.showToast({
-                    title: $return.message,
+                    title: $return.message
                 })
             }
         } catch (e) {
@@ -67,7 +67,7 @@ export default {
         }
         return $return
     },
-    async getUserInfo () {
+    async getUserInfo() {
         const loginData = await wepy.login()
         const openData = await this.jscode2session(loginData.code)
         const userinfo = await wepy.getUserInfo()
@@ -77,7 +77,7 @@ export default {
             ...openData.data
         }
     },
-    async login () {
+    async login() {
         let userinfoRaw = {}
         let userinfo = {}
         let $return = {}
@@ -86,7 +86,7 @@ export default {
             userinfo = await this.post(`frontend/user/wxLogin`, {
                 nickName: userinfoRaw.userInfo.nickName,
                 avatar: userinfoRaw.userInfo.avatarUrl,
-                wxSignature: userinfoRaw.openid,
+                wxSignature: userinfoRaw.openid
             })
             await wepy.setStorageSync('user', userinfo.data.user)
             await wepy.setStorageSync('userid', userinfo.data.userid)

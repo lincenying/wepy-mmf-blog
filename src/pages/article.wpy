@@ -35,17 +35,19 @@ import feedActions from '@/components/feed-actions'
 // import Comments from '@/components/comments'
 import Loading from '@/components/loading'
 
-@connect({
-    item(state) {
-        return state.article.item
+@connect(
+    {
+        item(state) {
+            return state.article.item
+        },
+        isLoad(state) {
+            return state.article.isLoad
+        }
     },
-    isLoad(state) {
-        return state.article.isLoad
+    {
+        getArticle
     }
-}, {
-    getArticle
-})
-
+)
 export default class Topics extends wepy.page {
     config = {
         navigationBarTitleText: 'M.M.F 小屋'
@@ -54,23 +56,20 @@ export default class Topics extends wepy.page {
         htmlParser,
         feedActions,
         // Comments,
-        Loading,
+        Loading
     }
     mixins = [globalMixin]
     data = {
         names: 'myHtmlParserKiner',
         content: '',
-        thisid: '',
+        thisid: ''
     }
-    computed = {
-
-    }
-    methods = {
-    }
+    computed = {}
+    methods = {}
     async onLoad(options) {
         wepy.showLoading({
             mask: true,
-            title: '数据加载中...',
+            title: '数据加载中...'
         })
         const id = options.id
         await this.methods.getArticle({
@@ -83,7 +82,7 @@ export default class Topics extends wepy.page {
         // this.$invoke('Comments', 'handleLoadMore', '1')
         wepy.hideLoading()
     }
-    onShareAppMessage () {
+    onShareAppMessage() {
         return {
             title: this.item.title,
             desc: this.item.title,

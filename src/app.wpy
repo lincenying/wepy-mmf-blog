@@ -14,12 +14,7 @@ setStore(store)
 
 export default class extends wepy.app {
     config = {
-        pages: [
-            'pages/topics',
-            'pages/topics-by-visit',
-            'pages/about',
-            'pages/article',
-        ],
+        pages: ['pages/topics', 'pages/topics-by-visit', 'pages/about', 'pages/article'],
         tabBar: {
             color: '#7c7c7c',
             selectedColor: '#3aced5',
@@ -52,26 +47,26 @@ export default class extends wepy.app {
             navigationBarTitleText: 'WeChat',
             navigationBarTextStyle: 'black'
         }
-    };
+    }
     globalData = {
         userInfo: null,
-        test: 1,
+        test: 1
     }
-    constructor () {
+    constructor() {
         super()
         this.use('requestfix')
         this.use('promisify')
     }
-    onLaunch () {
+    onLaunch() {
         this.getUserInfo()
     }
-    getUserInfo (cb) {
+    getUserInfo(cb) {
         const that = this
         if (this.globalData.userInfo) {
             return this.globalData.userInfo
         }
         wepy.getUserInfo({
-            success (res) {
+            success(res) {
                 that.globalData.userInfo = res.userInfo
                 cb && cb(res.userInfo)
             },

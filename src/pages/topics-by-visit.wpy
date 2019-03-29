@@ -23,26 +23,28 @@ import globalMixin from '../mixins/global'
 import { getTopicsByVisit } from '../store/actions'
 import Feed from '@/components/feed'
 
-@connect({
-    page(state) {
-        return state.topicsByVisit.page
+@connect(
+    {
+        page(state) {
+            return state.topicsByVisit.page
+        },
+        hasNext(state) {
+            return state.topicsByVisit.hasNext
+        },
+        lists(state) {
+            return state.topicsByVisit.lists
+        },
+        total(state) {
+            return state.topicsByVisit.total
+        },
+        isLoad(state) {
+            return state.topicsByVisit.isLoad
+        }
     },
-    hasNext(state) {
-        return state.topicsByVisit.hasNext
-    },
-    lists(state) {
-        return state.topicsByVisit.lists
-    },
-    total(state) {
-        return state.topicsByVisit.total
-    },
-    isLoad(state) {
-        return state.topicsByVisit.isLoad
+    {
+        getTopicsByVisit
     }
-}, {
-    getTopicsByVisit
-})
-
+)
 export default class TopicsByVisit extends wepy.page {
     config = {
         navigationBarTitleText: '热门 - M.M.F 小屋'
@@ -51,29 +53,23 @@ export default class TopicsByVisit extends wepy.page {
         Feed
     }
     mixins = [globalMixin]
-    data = {
-
-    }
-    computed = {
-
-    }
+    data = {}
+    computed = {}
     methods = {
         handleLoadMore() {
             this.methods.getTopicsByVisit({ page: this.page })
         }
     }
-    events = {
-
-    }
+    events = {}
     async onLoad() {
         wepy.showLoading({
             mask: true,
-            title: '数据加载中...',
+            title: '数据加载中...'
         })
         await this.methods.getTopicsByVisit({ page: 1 })
         wepy.hideLoading()
     }
-    onShareAppMessage () {
+    onShareAppMessage() {
         return {
             title: 'MMF小屋',
             desc: 'MMF小屋!',

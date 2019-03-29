@@ -23,26 +23,29 @@ import { getTopics, setGlobal } from '../store/actions'
 import Feed from '@/components/feed'
 import Loading from '@/components/loading'
 
-@connect({
-    page(state) {
-        return state.topics.page
+@connect(
+    {
+        page(state) {
+            return state.topics.page
+        },
+        hasNext(state) {
+            return state.topics.hasNext
+        },
+        lists(state) {
+            return state.topics.lists
+        },
+        total(state) {
+            return state.topics.total
+        },
+        isLoad(state) {
+            return state.topics.isLoad
+        }
     },
-    hasNext(state) {
-        return state.topics.hasNext
-    },
-    lists(state) {
-        return state.topics.lists
-    },
-    total(state) {
-        return state.topics.total
-    },
-    isLoad(state) {
-        return state.topics.isLoad
+    {
+        getTopics,
+        setGlobal
     }
-}, {
-    getTopics, setGlobal
-})
-
+)
 export default class Topics extends wepy.page {
     config = {
         navigationBarTitleText: 'M.M.F 小屋'
@@ -52,25 +55,19 @@ export default class Topics extends wepy.page {
         Loading
     }
     mixins = [globalMixin]
-    data = {
-
-    }
-    computed = {
-
-    }
+    data = {}
+    computed = {}
     methods = {
         handleLoadMore() {
             this.methods.getTopics({ page: this.page })
         }
     }
-    events = {
-
-    }
+    events = {}
     async onLoad() {
         let userinfo
         wepy.showLoading({
             mask: true,
-            title: '数据加载中...',
+            title: '数据加载中...'
         })
         try {
             userinfo = await api.login()
@@ -84,7 +81,7 @@ export default class Topics extends wepy.page {
         await this.methods.getTopics({ page: 1 })
         wepy.hideLoading()
     }
-    onShareAppMessage () {
+    onShareAppMessage() {
         return {
             title: 'MMF小屋',
             desc: 'MMF小屋!',

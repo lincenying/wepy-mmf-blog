@@ -45,7 +45,7 @@ export default class HTMLParser extends wepy.component {
     }
 
     events = {
-        'htmlParser-broadcast': ($event, ...args) => {},
+        'htmlParser-broadcast': ($event, ...args) => {}
     }
 
     methods = {
@@ -56,11 +56,11 @@ export default class HTMLParser extends wepy.component {
 
     async onLoad() {
         this.htmlParse()
-    };
+    }
 
     wxParseImgLoad(image) {
         const imgInfo = image.detail
-    };
+    }
 
     htmlParse() {
         /**
@@ -72,7 +72,13 @@ export default class HTMLParser extends wepy.component {
          * 5.imagePadding为当图片自适应是左右的单一padding(默认为0,可选)
          */
         try {
-            const htmlContent = WxParse.wxParse(this.parserName, this.parserType, this.parserContent || this.props.parserContent.default, this, this.parserPadding)
+            const htmlContent = WxParse.wxParse(
+                this.parserName,
+                this.parserType,
+                this.parserContent || this.props.parserContent.default,
+                this,
+                this.parserPadding
+            )
             //        this.htmlParserTpl = this[this.parserName];
             this.htmlParserTpl = htmlContent[this.parserName]
             this.$apply()

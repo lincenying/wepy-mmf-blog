@@ -1,2 +1,2 @@
 dist/*
-plugins/wxParse/*
+src/plugins/wxParse/*.js

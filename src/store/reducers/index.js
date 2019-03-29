@@ -8,5 +8,5 @@ export default combineReducers({
     global,
     topics,
     topicsByVisit,
-    article,
+    article
 })
